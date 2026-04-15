@@ -10,7 +10,7 @@ composer.phar
 /public/storage
 /storage/*.key
 /storage/pail
-.env
+.env/*
 .env.*.local
 .env.backup
 .env.production
