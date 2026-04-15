@@ -22,7 +22,8 @@ class ParkingAreasTable
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('vehicle_type')
-                    ->searchable(),
+                    ->searchable()
+                    ->badge(),
                 TextColumn::make('capacity')
                     ->numeric()
                     ->sortable(),

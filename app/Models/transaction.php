@@ -10,7 +10,7 @@ class transaction extends Model
         'vehicle_id',
         'time_in',
         'time_out',
-        'parking_rate_id',
+        'parking_rates_id',
         'duration_hour',
         'total_cost',
         'status',
@@ -25,7 +25,7 @@ class transaction extends Model
 
     public function parkingRate()
     {
-        return $this->belongsTo(ParkingRate::class);
+        return $this->belongsTo(ParkingRate::class, 'parking_rates_id');
     }
 
     public function user()
@@ -35,6 +35,6 @@ class transaction extends Model
 
     public function parkingArea()
     {
-        return $this->belongsTo(ParkingArea::class);
+        return $this->belongsTo(ParkingArea::class, 'parking_areas_id');
     }
 }
