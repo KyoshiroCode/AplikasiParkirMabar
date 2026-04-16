@@ -20,8 +20,7 @@ class UserForm
                     ->email()
                     ->required(),
                 Select::make('role')
-                    ->options(['admin' => 'Admin', 'petugas' => 'Petugas', 'owner' => 'Owner'])
-                    ->default('petugas')
+                    ->relationship('roles', 'name')
                     ->required(),
                 DateTimePicker::make('email_verified_at'),
                 TextInput::make('password')
