@@ -11,26 +11,19 @@ class TransactionInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('vehicle_id')
+                TextEntry::make('transaction_ins_id')
                     ->numeric(),
-                TextEntry::make('time_in')
-                    ->dateTime(),
                 TextEntry::make('time_out')
                     ->dateTime()
                     ->placeholder('-'),
-                TextEntry::make('parking_rates_id')
-                    ->numeric(),
                 TextEntry::make('duration_hour')
                     ->numeric()
                     ->placeholder('-'),
                 TextEntry::make('total_cost')
                     ->money()
                     ->placeholder('-'),
-                TextEntry::make('status')
-                    ->badge(),
+                TextEntry::make('status'),
                 TextEntry::make('user_id')
-                    ->numeric(),
-                TextEntry::make('parking_areas_id')
                     ->numeric(),
                 TextEntry::make('created_at')
                     ->dateTime()
@@ -38,6 +31,23 @@ class TransactionInfolist
                 TextEntry::make('updated_at')
                     ->dateTime()
                     ->placeholder('-'),
+                TextEntry::make('transactionIn.entry_time')
+                    ->dateTime()
+                    ->label('Time Entry')
+                    ->placeholder('-'),
+                TextEntry::make('transactionIn.owner')
+                    ->label('Owner')
+                    ->placeholder('-'),
+                TextEntry::make('transactionIn.parkingRate.rate_hour')
+                    ->money()
+                    ->label('Parking Rate')
+                    ->placeholder('-'),
+                TextEntry::make('transactionIn.parkingArea.name')
+                    ->label('Parking Area')
+                    ->placeholder('-'),
+                TextEntry::make('transactionIn.user.name')
+                    ->label('Staff')
+                    ->placeholder('-'), 
             ]);
     }
 }

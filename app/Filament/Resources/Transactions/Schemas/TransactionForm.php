@@ -3,11 +3,13 @@
 namespace App\Filament\Resources\Transactions\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Placeholder;
 use Filament\Schemas\Schema;
-use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Components\Utilities\Get;
+use App\Models\TransactionIn;
+use Carbon\Carbon;
 
 class TransactionForm
 {
@@ -15,31 +17,77 @@ class TransactionForm
     {
         return $schema
             ->components([
-                Select::make('vehicle_id')
-                    ->relationship('Vehicle','number_plate')
-                    ->label('Number Plate')
-                    ->required(),
-                DateTimePicker::make('time_in')
-                    ->required(),
-                DateTimePicker::make('time_out'),
-                Select::make('parking_rates_id')
+
+                Select::make('transaction_ins_id')
                     ->required()
-                    ->relationship('ParkingRate', 'rate_hour')
-                    ->label('Parking Rate Per Hour'),
+                    ->relationship('transactionIn', 'entry_time')
+                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->entry_time)
+                    ->label('Time Entry')
+                    ->live()
+                    ->afterStateUpdated(function ($state, Set $set) {
+                        $set('duration_hour', null);
+                    })
+                    ->dehydrated(),
+
+                DateTimePicker::make('time_out')
+                    ->required()
+                    ->live()
+                    ->afterStateUpdated(function (Get $get, Set $set) {
+
+                        $id = $get('transaction_ins_id');
+                        $exit = $get('time_out');
+
+                        if (!$id || !$exit) {
+                            $set('duration_hour', null);
+                            $set('total_cost', null);
+                            return;
+                        }
+
+                        $data = TransactionIn::find($id);
+
+                        if (!$data || !$data->entry_time) {
+                            $set('duration_hour', null);
+                            $set('total_cost', null);
+                            return;
+                        }
+
+                        $entryTime = Carbon::parse($data->entry_time);
+                        $exitTime = Carbon::parse($exit);
+
+                        // 🔥 hitung durasi
+                        $minutes = $entryTime->diffInMinutes($exitTime);
+                        $hours = ceil($minutes / 60);
+
+                        $set('duration_hour', $hours);
+
+                        // 🔥 ambil rate dari relasi
+                        $rate = $data->parkingRate->rate_hour ?? 0;
+
+                        // 🔥 hitung total
+                        $total = $hours * $rate;
+
+                        $set('total_cost', $total);
+                    }),
+
+
                 TextInput::make('duration_hour')
                     ->numeric()
-                    ->default(null),
-                Select::make('status')
-                    ->options(['in' => 'In', 'out' => 'Out'])
-                    ->default('in')
-                    ->required(),
-                Placeholder::make('user_id')
-                    ->label('Staff')
-                    ->content(fn () => Auth::id() -> name ?? 'Not logged in'),
-                Select::make('parking_areas_id')
+                    ->disabled()
+                    ->dehydrated(),
+
+                TextInput::make('total_cost')
+                    ->numeric()
+                    ->default(null)
+                    ->prefix('$'),
+
+                TextInput::make('status')
                     ->required()
-                    ->relationship('ParkingArea', 'name')
-                    ->label('Area Parking'),
+                    ->default('out'),
+
+                Select::make('user_id')
+                    ->required()
+                    ->relationship('user', 'name')
+                    ->label('Staff'),
             ]);
     }
 }

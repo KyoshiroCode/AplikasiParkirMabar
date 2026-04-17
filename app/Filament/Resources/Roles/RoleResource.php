@@ -28,6 +28,10 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Unique;
+// use Spatie\Permission\Traits\HasRole;
+// use Illuminate\Support\Facades\Auth;
+// use Spatie\Permission\Traits\HasRoles;
+// use Spatie\Permission\Models\Role;
 use Override;
 
 class RoleResource extends Resource
@@ -167,4 +171,9 @@ class RoleResource extends Resource
     {
         return FilamentShieldPlugin::get();
     }
+
+    // public static function canViewAny(): bool
+    // {
+    //     return Auth::user()?->can('vi')
+    // }
 }

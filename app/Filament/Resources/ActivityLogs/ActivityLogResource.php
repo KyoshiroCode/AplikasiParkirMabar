@@ -14,6 +14,11 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Spatie\Activitylog\Models\Activity; 
+// use Spatie\Permission\Traits\HasRole;
+// use Illuminate\Support\Facades\Auth;
+// use Override;
+// use Spatie\Permission\Traits\HasRoles;
+// use Spatie\Permission\Models\Role;
 
 class ActivityLogResource extends Resource
 {
@@ -49,5 +54,10 @@ class ActivityLogResource extends Resource
             'index' => ListActivityLogs::route('/'),
             'view' => ViewActivityLog::route('/{record}'),
         ];
+    }
+
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->hasRole('admin');
     }
 }

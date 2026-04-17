@@ -17,16 +17,14 @@ class transaction extends Model
         ->logOnlyDirty();
     }
     protected $fillable = [
-        'vehicle_id',
-        'time_in',
+        'transaction_ins_id',
         'time_out',
-        'parking_rates_id',
         'duration_hour',
         'total_cost',
         'status',
         'user_id',
-        'parking_areas_id',
     ];
+
 
     public function vehicle()
     {
@@ -47,4 +45,22 @@ class transaction extends Model
     {
         return $this->belongsTo(ParkingArea::class, 'parking_areas_id');
     }
+
+    public function transactionIn()
+    {
+        return $this->belongsTo(TransactionIn::class, 'transaction_ins_id');
+    }
+    protected static function booted()
+    {
+        static::created(function ($transaction) {
+
+            $area = $transaction->transactionIn->parkingArea;
+
+            if ($area) {
+                $area->increment('capacity'); // +1
+                $area->decrement('used_slots'); // -1
+            }
+        });
+    }
+
 }

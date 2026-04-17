@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('transaction_ins', function (Blueprint $table) {
             $table->id();
             $table->foreignId('vehicle_id')->constrained('vehicles')->onDelete('cascade')->onUpdate('cascade');
-            $table->timestamp('time_in');
-            $table->timestamp('time_out')->nullable();
-            $table->foreignId('parking_rates_id')->constrained('parking_rates')->onUpdate('cascade')->onDelete('cascade');
-            $table->integer('duration_hour')->nullable(); 
-            $table->integer('total_cost')->nullable();
-            $table->enum('status', ['in', 'out'])->default('in');
+            $table->timestamp('entry_time')->useCurrent();
+            $table->string('status')->default('in');
+            $table->string('owner')->nullable();
+            $table->foreignId('parking_rate_id')->constrained('parking_rates')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('parking_area_id')->constrained('parking_areas')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('parking_areas_id')->constrained('parking_areas')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('transaction_ins');
     }
 };

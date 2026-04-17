@@ -29,4 +29,14 @@ class ParkingArea extends Model
     {
         return $this->hasMany(ParkingRate::class);
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function transactionIns()
+    {
+        return $this->hasMany(TransactionIn::class);
+    }
 }

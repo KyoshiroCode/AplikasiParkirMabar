@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Transactions\Tables;
+namespace App\Filament\Resources\TransactionIns\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -9,30 +9,31 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class TransactionsTable
+class TransactionInsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
-        ->columns([
-                TextColumn::make('transactionIn.entry_time')
+            ->columns([
+                TextColumn::make('Vehicle.number_plate')
+                    ->label('Plate Number')
+                    ->sortable(),
+                TextColumn::make('entry_time')
                     ->dateTime()
-                    ->label('Time Entry')
-                    ->sortable(),
-                TextColumn::make('time_out')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('duration_hour')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('total_cost')
-                    ->money()
                     ->sortable(),
                 TextColumn::make('status')
                     ->searchable(),
-                TextColumn::make('user.name')
-                    ->label('Staff Exit')
+                TextColumn::make('owner')
+                    ->searchable(),
+                TextColumn::make('parkingRate.rate_hour')
+                    ->label('Parking Rate')
                     ->numeric()
+                    ->sortable(),
+                TextColumn::make('parkingArea.name')
+                    ->label('Parking Area')
+                    ->sortable(),
+                TextColumn::make('user.name')
+                    ->label('Staff')
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -42,19 +43,6 @@ class TransactionsTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('transactionIn.owner') 
-                    ->label('Owner')
-                    ->searchable(),
-                TextColumn::make('transactionIn.parkingRate.rate_hour')
-                    ->money()
-                    ->label('Parking Rate')
-                    ->sortable(),
-                TextColumn::make('transactionIn.parkingArea.name')
-                    ->label('Parking Area')
-                    ->sortable(),
-                TextColumn::make('transactionIn.user.name')
-                    ->label('Staff Entry')
-                    ->sortable(), 
             ])
             ->filters([
                 //
