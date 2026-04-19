@@ -20,7 +20,7 @@ class ParkingRateResource extends Resource
 {
     protected static ?string $model = ParkingRate::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
 
     protected static ?string $recordTitleAttribute = 'id';
 

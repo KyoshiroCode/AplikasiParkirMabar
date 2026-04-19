@@ -1,21 +1,27 @@
 <?php
 
-namespace App\Filament\Resources\TransactionIns\Tables;
+namespace App\Filament\Resources\Tickets\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
-class TransactionInsTable
+class TicketsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('Vehicle.number_plate')
+                TextColumn::make('code')
+                    ->searchable(),
+                TextColumn::make('vehicle.number_plate')
                     ->label('Plate Number')
                     ->sortable(),
                 TextColumn::make('entry_time')
@@ -25,12 +31,11 @@ class TransactionInsTable
                     ->searchable(),
                 TextColumn::make('owner')
                     ->searchable(),
-                TextColumn::make('parkingRate.rate_hour')
-                    ->label('Parking Rate')
-                    ->numeric()
+                TextColumn::make('ParkingRate.rate_hour')
+                    ->label('Rate Hour')
                     ->sortable(),
-                TextColumn::make('parkingArea.name')
-                    ->label('Parking Area')
+                TextColumn::make('ParkingArea.name')
+                    ->numeric()
                     ->sortable(),
                 TextColumn::make('user.name')
                     ->label('Staff')
@@ -43,17 +48,24 @@ class TransactionInsTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('deleted_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
+                    ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ]);
     }

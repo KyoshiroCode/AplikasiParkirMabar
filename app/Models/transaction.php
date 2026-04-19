@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Support\Str;
+
 
 class transaction extends Model
 {
@@ -17,7 +19,8 @@ class transaction extends Model
         ->logOnlyDirty();
     }
     protected $fillable = [
-        'transaction_ins_id',
+        'transaction_code',
+        'tickets_id',
         'time_out',
         'duration_hour',
         'total_cost',
@@ -46,20 +49,41 @@ class transaction extends Model
         return $this->belongsTo(ParkingArea::class, 'parking_areas_id');
     }
 
-    public function transactionIn()
+    public function ticket()
     {
-        return $this->belongsTo(TransactionIn::class, 'transaction_ins_id');
+        return $this->belongsTo(Tickets::class, 'tickets_id');
+    }
+
+    public function Transactions()
+    {
+        return $this->hasMany(Transactions::class);
     }
     protected static function booted()
     {
         static::created(function ($transaction) {
 
-            $area = $transaction->transactionIn->parkingArea;
+            $area = $transaction->ticket->parkingArea;
 
             if ($area) {
                 $area->increment('capacity'); // +1
                 $area->decrement('used_slots'); // -1
             }
+        });
+
+        static::creating(function ($model) {
+
+            do {
+                $date = now()->format('dmY'); // 17042026
+                $random = strtoupper(Str::random(4));
+
+                $code = "TR-". $date ."-". $random;
+
+            } while (self::where('transaction_code', $code)->exists());
+
+            $model->transaction_code = $code;
+        });
+        static::creating(function ($model){
+            $model->user_id = auth()->id();
         });
     }
 

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Transactions\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -15,7 +16,13 @@ class TransactionsTable
     {
         return $table
         ->columns([
-                TextColumn::make('transactionIn.entry_time')
+                TextColumn::make('transaction_code')
+                    ->label('Transaction Code')
+                    ->sortable(),
+                TextColumn::make('ticket.code')
+                    ->label('Ticket Code')
+                    ->sortable(),
+                TextColumn::make('ticket.entry_time')
                     ->dateTime()
                     ->label('Time Entry')
                     ->sortable(),
@@ -42,17 +49,17 @@ class TransactionsTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('transactionIn.owner') 
+                TextColumn::make('ticket.owner') 
                     ->label('Owner')
                     ->searchable(),
-                TextColumn::make('transactionIn.parkingRate.rate_hour')
+                TextColumn::make('ticket.parkingRate.rate_hour')
                     ->money()
                     ->label('Parking Rate')
                     ->sortable(),
-                TextColumn::make('transactionIn.parkingArea.name')
+                TextColumn::make('ticket.parkingArea.name')
                     ->label('Parking Area')
                     ->sortable(),
-                TextColumn::make('transactionIn.user.name')
+                TextColumn::make('ticket.user.name')
                     ->label('Staff Entry')
                     ->sortable(), 
             ])
@@ -62,6 +69,7 @@ class TransactionsTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

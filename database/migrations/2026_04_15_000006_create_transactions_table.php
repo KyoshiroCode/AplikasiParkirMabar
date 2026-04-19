@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaction_ins_id')->constrained('transaction_ins')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('transaction_code')->unique();
+            $table->foreignId('tickets_id')->constrained('tickets')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamp('time_out')->nullable();
             $table->integer('duration_hour')->nullable(); 
             $table->integer('total_cost')->nullable();

@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Filament\Resources\Transactions\Pages;
+namespace App\Filament\Resources\Tickets\Pages;
 
-use App\Filament\Resources\Transactions\TransactionResource;
+use App\Filament\Resources\Tickets\TicketsResource;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Actions\Action;
 
-class ViewTransaction extends ViewRecord
+class ViewTickets extends ViewRecord
 {
-    protected static string $resource = TransactionResource::class;
+    protected static string $resource = TicketsResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
             EditAction::make(),
             Action::make('print')
-            ->label('Print Struck')
+            ->label('Print Ticket')
             ->icon('heroicon-o-printer')
-            ->url(fn () => url('/struck/print/' . $this->record->id))
+            ->url(fn () => url('/ticket/print/' . $this->record->id))
             ->openUrlInNewTab(),
 
         ];
