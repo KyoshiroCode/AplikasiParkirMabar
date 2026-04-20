@@ -3,7 +3,7 @@
 <head>
     <style>
         body { 
-            font-family: sans-serif; 
+            font-family: monospace; 
         }
         .box { 
             border: 1px dashed #000; 

@@ -2,7 +2,7 @@
 <html>
 <head>
     <style>
-        body { font-family: sans-serif; }
+        body { font-family: monospace; }
         .box { border: 1px dashed #000; padding: 20px; width: 300px; margin:auto; }
         h3 { text-align: center; }
     </style>

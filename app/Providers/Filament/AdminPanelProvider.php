@@ -19,6 +19,9 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use Filament\Widgets\StatsOverviewWidget\Stat;
+use App\Filament\Widgets\StatsDashboard;
+use App\Filament\Widgets\WelcomeWidget;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -29,6 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('')
             ->login()
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->brandName('E-Parking Sinarnaga')
             ->colors([
                 'primary' => Color::Blue,
@@ -42,6 +46,8 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 // AccountWidget::class,
                 // FilamentInfoWidget::class,
+                StatsDashboard::class,
+                WelcomeWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

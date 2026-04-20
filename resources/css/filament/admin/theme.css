@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* NAVY SIDEBAR */
+.fi-sidebar {
+    background-color: #0f172a !important;
+}
+
+/* TEXT PUTIH */
+.fi-sidebar * {
+    color: white !important;
+}
+
+/* HOVER */
+.fi-sidebar a:hover {
+    background-color: #1e293b !important;
+}
+
+/* ACTIVE */
+.fi-sidebar .fi-active {
+    background-color: #1e293b !important;
+}
