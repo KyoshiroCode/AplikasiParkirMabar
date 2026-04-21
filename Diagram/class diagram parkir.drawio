@@ -1,0 +1,84 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="R-yqP3jGknYR9xiHcOIH">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="085rR2DHFXiTknWMzP1a-2" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="tb_kendaraan" vertex="1">
+          <mxGeometry height="135" width="170" x="220" y="110" as="geometry">
+            <mxRectangle height="30" width="110" x="220" y="110" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-4" parent="085rR2DHFXiTknWMzP1a-2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="id_kendaraan:int(11)&lt;div&gt;plat_nomer:varchar(15)&lt;/div&gt;&lt;div&gt;jenis_kendaraan:varchar(20)&lt;/div&gt;&lt;div&gt;warna:varchar(20)&lt;/div&gt;&lt;div&gt;pemilik:varchar(100)&lt;/div&gt;&lt;div&gt;id_user:int(11)&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="115" width="170" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-6" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="tb_transaksi" vertex="1">
+          <mxGeometry height="220" width="170" x="470" y="110" as="geometry">
+            <mxRectangle height="30" width="110" x="220" y="110" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-7" parent="085rR2DHFXiTknWMzP1a-6" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div&gt;&lt;div&gt;id_parkit:int(11)&lt;/div&gt;&lt;/div&gt;&lt;div&gt;id_kendaraan:int(11)&lt;/div&gt;&lt;div&gt;waktu_masuk:datetime&lt;/div&gt;&lt;div&gt;waktu_keluar:datetime&lt;/div&gt;&lt;div&gt;id_tarif:int(11)&lt;/div&gt;&lt;div&gt;durasi_jam:int(5)&lt;/div&gt;&lt;div&gt;biaya_total:decimal(10.0)&lt;/div&gt;&lt;div&gt;status:enum(&#39;masuk&#39;,&#39;keluar&#39;)&lt;/div&gt;&lt;div&gt;id_user:int(11)&lt;/div&gt;&lt;div&gt;id_area:int(11)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="115" width="170" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-8" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="tb_area_parkir" vertex="1">
+          <mxGeometry height="115" width="170" x="470" y="370" as="geometry">
+            <mxRectangle height="30" width="110" x="220" y="110" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-9" parent="085rR2DHFXiTknWMzP1a-8" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div&gt;&lt;div&gt;id_area:int(11)&lt;/div&gt;&lt;/div&gt;&lt;div&gt;nama_area:varchar(50)&lt;/div&gt;&lt;div&gt;kapasitas:int(5)&lt;/div&gt;&lt;div&gt;terisi:int(5)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="65" width="170" y="25" as="geometry" />
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-11" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="tb_tarif" vertex="1">
+          <mxGeometry height="90" width="240" x="700" y="110" as="geometry">
+            <mxRectangle height="30" width="110" x="220" y="110" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-12" parent="085rR2DHFXiTknWMzP1a-11" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div&gt;&lt;div&gt;id_tarif:int(11)&lt;/div&gt;&lt;/div&gt;&lt;div&gt;jenis_kendaraan:enum(&#39;motor&#39;,&#39;mobil&#39;)&lt;/div&gt;&lt;div&gt;tarif_per_jam:decimal(11)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="240" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-14" edge="1" parent="1" source="085rR2DHFXiTknWMzP1a-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.012;entryY=0.696;entryDx=0;entryDy=0;entryPerimeter=0;" target="085rR2DHFXiTknWMzP1a-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-15" edge="1" parent="1" source="085rR2DHFXiTknWMzP1a-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" target="085rR2DHFXiTknWMzP1a-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-16" edge="1" parent="1" source="085rR2DHFXiTknWMzP1a-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" target="085rR2DHFXiTknWMzP1a-6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="470" y="390" />
+              <mxPoint x="450" y="390" />
+              <mxPoint x="450" y="275" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-17" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="tb_user" vertex="1">
+          <mxGeometry height="125" width="240" x="700" y="245" as="geometry">
+            <mxRectangle height="30" width="110" x="220" y="110" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-18" parent="085rR2DHFXiTknWMzP1a-17" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div&gt;&lt;div&gt;id_user:int(11)&lt;/div&gt;&lt;/div&gt;&lt;div&gt;nama_lengkap:varchar(50)&lt;/div&gt;&lt;div&gt;username:varchar(50)&lt;/div&gt;&lt;div&gt;password:varchar(100)&lt;/div&gt;&lt;div&gt;role:enum(&#39;admin&#39;,&#39;petugas&#39;,&#39;owner&#39;)&lt;/div&gt;&lt;div&gt;status_aktif:tinyInt(1)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="85" width="240" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-19" edge="1" parent="1" source="085rR2DHFXiTknWMzP1a-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" target="085rR2DHFXiTknWMzP1a-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-20" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="tb_log_aktivitas" vertex="1">
+          <mxGeometry height="125" width="240" x="710" y="488" as="geometry">
+            <mxRectangle height="30" width="110" x="220" y="110" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-21" parent="085rR2DHFXiTknWMzP1a-20" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div&gt;&lt;div&gt;id_log:int(11)&lt;/div&gt;&lt;/div&gt;&lt;div&gt;id_user:int(11)&lt;/div&gt;&lt;div&gt;aktivitas:varchar(100)&lt;/div&gt;&lt;div&gt;role:enum(&#39;admin&#39;,&#39;petugas&#39;,&#39;owner&#39;)&lt;/div&gt;&lt;div&gt;status_aktif:tinyInt(1).&lt;/div&gt;" vertex="1">
+          <mxGeometry height="75" width="240" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="085rR2DHFXiTknWMzP1a-22" edge="1" parent="1" source="085rR2DHFXiTknWMzP1a-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.012;entryY=0.141;entryDx=0;entryDy=0;entryPerimeter=0;" target="085rR2DHFXiTknWMzP1a-18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="670" y="473" />
+              <mxPoint x="670" y="287" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
