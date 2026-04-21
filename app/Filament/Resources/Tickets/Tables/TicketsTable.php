@@ -12,6 +12,12 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\DatePicker;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\Notification;
+use App\Models\ParkingArea;
 
 class TicketsTable
 {
@@ -54,8 +60,24 @@ class TicketsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                Filter::make('date_range')
+                    ->label('Filter Entry Time')
+                    ->form([
+                        DatePicker::make('from')->label('From'),
+                        DatePicker::make('to')->label('To'),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        if ($data['from']) {
+                            $query->whereDate('entry_time', '>=', $data['from']);
+                        }
+                        if ($data['to']) {
+                            $query->whereDate('entry_time', '<=', $data['to']);
+                        }
+                    }),
                 TrashedFilter::make(),
+
             ])
+            ->defaultSort('entry_time', 'desc')
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),

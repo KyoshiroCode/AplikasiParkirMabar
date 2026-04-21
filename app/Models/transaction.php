@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 
 class transaction extends Model
 {
-    use LogsActivity;
+    use LogsActivity, HasFactory;
 
     public function getActivitylogOptions(): LogOptions
     {

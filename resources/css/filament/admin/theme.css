@@ -1,23 +1,63 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* NAVY SIDEBAR */
+
+/* SIDEBAR BACKGROUND */
 .fi-sidebar {
-    background-color: #0f172a !important;
+    background: linear-gradient(180deg, #0f172a, #020617);
 }
 
-/* TEXT PUTIH */
+/* SIDEBAR TEXT */
 .fi-sidebar * {
-    color: white !important;
+    color: #cbd5f5;
 }
 
-/* HOVER */
-.fi-sidebar a:hover {
-    background-color: #1e293b !important;
+.fi-sidebar .fi-active{
+    color: #fff !important;
 }
 
-/* ACTIVE */
-.fi-sidebar .fi-active {
-    background-color: #1e293b !important;
+.fi-sidebar a:hover{
+    background-color: #020617 !important;
+}
+
+.fi-input-wrp {
+    background: rgba(160, 127, 127, 0.05) !important;
+    border: none !important;
+    color: rgb(0, 0, 0) !important;
+}
+.fi-global-search-field{
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.fi-sidebar .fi-badge{
+    background-color: #000c1f;
+    color: white;
+}
+
+.fi-sidebar .fi-dropdown-panel {
+    background-color: #1e243b;
+}
+.fi-dropdown-list-item:hover{
+    background-color: #100c24;
+}
+
+.fi-sidebar-item .fi-active{
+    background-color: #020617  !important;
+    color: black !important;
+}
+
+.fi-sidebar-item .fi-active .fi-sidebar-item-has-url ul .fi-active {
+    background-color: #020617  !important;
+    color: black !important;
+}
+.fi-sidebar-item{
+    &.fi-active{
+        &>.fi-sidebar-item-btn{
+            background-color: #020617  !important;
+            color: black !important;
+        }
+    }
 }

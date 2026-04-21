@@ -5,10 +5,11 @@ namespace App\Models;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ParkingRate extends Model
 {
-    use LogsActivity;
+    use LogsActivity, HasFactory;
 
     public function getActivitylogOptions(): LogOptions
     {

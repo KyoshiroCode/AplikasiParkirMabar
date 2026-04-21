@@ -17,12 +17,24 @@ class StatsDashboard extends StatsOverviewWidget
         return [
             Stat::make('Entry', $countTicket)
                 ->color('success')
+                ->extraAttributes([
+                    'class' => 'cursor-pointer',
+                    'wire:click' => "\$dispatch('setStatusFilter', { filter: 'pending' })",
+                ])
                 ->description('Parking Entry'),
             Stat::make('Out', $countTransaction)
                 ->color('danger')
+                ->extraAttributes([
+                    'class' => 'cursor-pointer',
+                    'wire:click' => "\$dispatch('setStatusFilter', { filter: 'processed' })",
+                ])
                 ->description('Parking Out'),
             Stat::make('Parking Area Used', ParkingArea::sum('used_slots'))
                 ->color('primary')
+                ->extraAttributes([
+                    'class' => 'cursor-pointer',
+                    'wire:click' => "\$dispatch('setStatusFilter', { filter: 'processed' })",
+                ])
                 ->description('Used Parking Slots'),
 
         ];

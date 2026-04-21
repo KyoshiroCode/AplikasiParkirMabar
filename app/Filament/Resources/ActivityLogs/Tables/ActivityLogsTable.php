@@ -40,6 +40,7 @@ class ActivityLogsTable
             ->filters([
                 //
             ])
+            ->defaultSort('created_at', 'desc')
             ->recordActions([
                 ViewAction::make(),
             ])

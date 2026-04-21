@@ -44,7 +44,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                // AccountWidget::class,
+                AccountWidget::class,
                 // FilamentInfoWidget::class,
                 StatsDashboard::class,
                 WelcomeWidget::class,
@@ -63,6 +63,9 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->plugin(FilamentShieldPlugin::make());
+            ->plugin(FilamentShieldPlugin::make())
+            ->topBar(false)
+            ->darkMode(false)
+            ->sidebarFullyCollapsibleOnDesktop();
     }
 }

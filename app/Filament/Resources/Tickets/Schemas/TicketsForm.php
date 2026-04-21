@@ -11,6 +11,8 @@ use Filament\Schemas\Components\Utilities\Get;
 use App\Models\Vehicle;
 use App\Models\ParkingRate;
 use App\Models\ParkingArea;
+use Filament\Notifications\Notification;
+
 
 
 class TicketsForm
@@ -58,26 +60,35 @@ class TicketsForm
                 Select::make('parking_area_id')
                     ->required()
                     ->label('Parking Area')
-                    ->options(function (Get $get) {
+                    ->relationship('ParkingArea', 'name')
+                    // ->options(function (Get $get) {
 
-                        $vehicleId = $get('vehicle_id');
+                    //     $vehicleId = $get('vehicle_id');
 
-                        if (!$vehicleId) return [];
+                    //     if (!$vehicleId) return [];
 
-                        $vehicle = Vehicle::find($vehicleId);
+                    //     $vehicle = \App\Models\Vehicle::find($vehicleId);
 
-                        if (!$vehicle) return [];
+                    //     if (!$vehicle) return [];
 
-                        return ParkingArea::where('vehicle_type', $vehicle->vehicle_type)
-                            ->whereColumn('used_slots', '<', 'capacity') 
-                            ->pluck('name', 'id');
-                        return $areas->isEmpty()
-                            ? ['' => '=All Slots Are Full=']
-                            : $areas;
+                    //     return \App\Models\ParkingArea::where('vehicle_type', $vehicle->vehicle_type)
+                    //         ->pluck('name', 'id');
+                    // })
+                    ->reactive()
+                    ->afterStateUpdated(function ($state) {
 
+                        $area = \App\Models\ParkingArea::find($state);
+
+                        if ($area && $area->capacity === 0) {
+
+                            Notification::make()
+                                ->title('Parkir penuh!')
+                                ->body('Area ini sudah tidak tersedia slot.')
+                                ->danger()
+                                ->send();
+                        }
                     })
 
-                    ->reactive(),
 
             ]);
     }
