@@ -25,7 +25,6 @@ class transaction extends Model
         'time_out',
         'duration_hour',
         'total_cost',
-        'status',
         'user_id',
     ];
 
@@ -52,7 +51,7 @@ class transaction extends Model
 
     public function ticket()
     {
-        return $this->belongsTo(Tickets::class, 'tickets_id');
+        return $this->belongsTo(Tickets::class, 'tickets_id', 'id');
     }
 
     public function Transactions()
@@ -61,29 +60,36 @@ class transaction extends Model
     }
     protected static function booted()
     {
+        // 🔥 setelah transaksi dibuat
         static::created(function ($transaction) {
 
-            $area = $transaction->ticket->parkingArea;
+            $ticket = $transaction->ticket;
 
-            if ($area) {
-                $area->increment('capacity'); // +1
-                $area->decrement('used_slots'); // -1
+            if (!$ticket) return;
+
+            $ticket->update([
+                'status' => 'out'
+            ]);
+
+            $area = $ticket->parkingArea;
+
+            if ($area && $area->used_slots > 0) {
+                $area->decrement('used_slots');
             }
         });
 
+        // 🔥 generate code
         static::creating(function ($model) {
 
             do {
-                $date = now()->format('dmY'); // 17042026
-                $random = strtoupper(Str::random(4));
-
-                $code = "TR-". $date ."-". $random;
-
+                $code = "TR-" . now()->format('dmY') . "-" . strtoupper(Str::random(4));
             } while (self::where('transaction_code', $code)->exists());
 
             $model->transaction_code = $code;
         });
-        static::creating(function ($model){
+
+        // 🔥 auto user
+        static::creating(function ($model) {
             $model->user_id = auth()->id();
         });
     }

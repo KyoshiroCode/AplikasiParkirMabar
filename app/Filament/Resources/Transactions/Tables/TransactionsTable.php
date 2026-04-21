@@ -45,7 +45,8 @@ class TransactionsTable
                 TextColumn::make('total_cost')
                     ->money()
                     ->sortable(),
-                TextColumn::make('status')
+                TextColumn::make('ticket.status')
+                    ->label('Status')
                     ->searchable(),
                 TextColumn::make('user.name')
                     ->label('Staff Exit')

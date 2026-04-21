@@ -2,6 +2,7 @@
 
 use App\Models\Tickets;
 use App\Models\transaction;
+use App\Models\FinancialReport;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 Route::get('/ticket/print/{id}', function ($id) {
@@ -21,4 +22,16 @@ Route::get('/struck/print/{id}', function ($id){
     $pdf = Pdf::loadView('pdf.struck', compact('transaction'));
 
     return $pdf->stream('struck.pdf');
+});
+
+
+
+Route::get('/report/print/{id}', function ($id) {
+
+    $report = FinancialReport::findOrFail($id);
+    $transactions = $report->transactions()->get();
+
+    $pdf = Pdf::loadView('pdf.report', compact('report', 'transactions'));
+
+    return $pdf->stream('report.pdf');
 });

@@ -12,6 +12,7 @@ use App\Models\Vehicle;
 use App\Models\ParkingRate;
 use App\Models\ParkingArea;
 use Filament\Notifications\Notification;
+use App\Models\Tickets;
 
 
 
@@ -25,25 +26,40 @@ class TicketsForm
                     ->required()
                     ->relationship('vehicle','number_plate')
                     ->reactive()
+                    ->preload()
                     ->searchable()
                     ->afterStateUpdated(function ($state, Set $set) {
 
-                        if (!$state) {
-                            $set('owner', null);
-                            $set('parking_rate_id', null);
-                            $set('parking_area_id', null);
+                        if (!$state) return;
+
+                        // 🔥 cek apakah masih ada tiket aktif
+                        $exists = Tickets::where('vehicle_id', $state)
+                            ->where('status', 'in')
+                            ->exists();
+
+                        if ($exists) {
+                            Notification::make()
+                                ->title('Kendaraan masih parkir!')
+                                ->body('Kendaraan ini belum keluar.')
+                                ->danger()
+                                ->send();
+
+                            // reset pilihan biar ga bisa lanjut
+                            $set('vehicle_id', null);
+
                             return;
                         }
 
-                        $vehicle = Vehicle::find($state);
+                        // lanjut logic lu
+                        $vehicle = \App\Models\Vehicle::find($state);
 
                         $set('owner', $vehicle?->owner);
 
-                        $rate = ParkingRate::where('vehicle_type', $vehicle?->vehicle_type)->first();
+                        $rate = \App\Models\ParkingRate::where('vehicle_type', $vehicle?->vehicle_type)->first();
 
                         $set('parking_rate_id', $rate?->id);
 
-                        $set('parking_area_id', null); // reset biar ke-filter ulang
+                        $set('parking_area_id', null);
                     })
 
                     ->label('Vehicle'),

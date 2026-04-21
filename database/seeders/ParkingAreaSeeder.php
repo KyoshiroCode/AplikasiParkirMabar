@@ -18,7 +18,7 @@ class ParkingAreaSeeder extends Seeder
             'name' => 'B1-Car',
             'vehicle_type' => 'car',
             'capacity' => 7,
-            'used_slot' => 0
+            'used_slots' => 0
         ]);
 
         ParkingArea::create([
@@ -26,7 +26,7 @@ class ParkingAreaSeeder extends Seeder
             'name' => 'B1-Motorcycle',
             'vehicle_type' => 'motorcycle',
             'capacity' => 7,
-            'used_slot' => 0
+            'used_slots' => 0
         ]);
 
         ParkingArea::create([
@@ -34,7 +34,7 @@ class ParkingAreaSeeder extends Seeder
             'name' => 'B2-Car',
             'vehicle_type' => 'car',
             'capacity' => 10,
-            'used_slot' => 0
+            'used_slots' => 0
         ]);
 
         ParkingArea::create([
@@ -42,7 +42,7 @@ class ParkingAreaSeeder extends Seeder
             'name' => 'B2-Motorcycle',
             'vehicle_type' => 'motorcycle',
             'capacity' => 15,
-            'used_slot' => 0
+            'used_slots' => 0
         ]);
 
     }

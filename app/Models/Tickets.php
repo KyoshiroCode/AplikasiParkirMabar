@@ -28,6 +28,7 @@ class Tickets extends Model
         'owner',
         'parking_rate_id',
         'parking_area_id',
+        'status',
         'user_id',
     ];
 

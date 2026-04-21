@@ -22,48 +22,39 @@ class TransactionForm
 
                 Select::make('tickets_id')
                     ->required()
-                    ->relationship('ticket', 'code')
+                    ->relationship(
+                        'ticket',
+                        'code',
+                        fn ($query) => $query->where('status', 'in') // 🔥 cuma yang masih parkir
+                    )
                     ->label('Ticket Code')
                     ->searchable()
-                    ->reactive()
-                    ->afterStateUpdated(fn ($state, Set $set) => $set('duration_hour', null)),
+                    ->preload()
+                    ->live()
+                    ->afterStateUpdated(function ($state, Set $set) {
+
+                        if (!$state) return;
+
+                        $ticket = \App\Models\Tickets::with('parkingRate')->find($state);
+                        if (!$ticket || !$ticket->entry_time) return;
+
+                        $entry = \Carbon\Carbon::parse($ticket->entry_time);
+                        $exit = now();
+
+                        $hours = ceil($entry->diffInMinutes($exit) / 60);
+
+                        $rate = $ticket->parkingRate?->rate_hour ?? 0;
+
+                        $set('duration_hour', $hours);
+                        $set('total_cost', $hours * $rate);
+                    }),
+
 
                 DateTimePicker::make('time_out')
                     ->default(now())
-                    ->disabled()
+                    ->readOnly()
                     ->required()
-                    ->reactive()
-                    ->afterStateUpdated(function (Get $get, Set $set) {
-
-                        $id = $get('tickets_id');
-                        $exit = $get('time_out');
-
-                        if (!$id || !$exit) {
-                            $set('duration_hour', null);
-                            $set('total_cost', null);
-                            return;
-                        }
-
-                        $ticket = Tickets::find($id);
-
-                        if (!$ticket || !$ticket->entry_time) {
-                            $set('duration_hour', null);
-                            $set('total_cost', null);
-                            return;
-                        }
-
-                        $entryTime = Carbon::parse($ticket->entry_time);
-                        $exitTime = Carbon::parse($exit);
-
-                        $minutes = $entryTime->diffInMinutes($exitTime);
-                        $hours = ceil($minutes / 60);
-
-                        $set('duration_hour', $hours);
-
-                        $rate = $ticket->parkingRate->rate_hour ?? 0;
-
-                        $set('total_cost', $hours * $rate);
-                    }),
+                    ->reactive(),
 
                 TextInput::make('duration_hour')
                     ->numeric()
@@ -76,8 +67,10 @@ class TransactionForm
                     ->dehydrated()
                     ->prefix('Rp'),
 
-                TextInput::make('status')
+                TextInput::make('ticket.status')
                     ->required()
+                    ->disabled()
+                    ->dehydrated()
                     ->default('out'),
 
             ]);

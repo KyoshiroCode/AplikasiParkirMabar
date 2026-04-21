@@ -26,7 +26,7 @@ class TransactionInfolist
                 TextEntry::make('total_cost')
                     ->money()
                     ->placeholder('-'),
-                TextEntry::make('status'),
+                TextEntry::make('ticket.status'),
                 TextEntry::make('user.name')
                     ->label('Staff Ticket'),
                 TextEntry::make('created_at')

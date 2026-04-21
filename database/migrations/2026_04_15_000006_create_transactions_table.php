@@ -18,7 +18,6 @@ return new class extends Migration
             $table->timestamp('time_out')->useCurrent();
             $table->integer('duration_hour')->nullable(); 
             $table->integer('total_cost')->nullable();
-            $table->string('status')->default('out');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
