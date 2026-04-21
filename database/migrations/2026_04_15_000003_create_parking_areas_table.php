@@ -17,9 +17,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('vehicle_type');
             $table->integer('capacity');
-            $table->integer('used_slots');
+            $table->integer('used_slots')->default(0);
             $table->boolean('is_active')->default(True);
             $table->timestamps();
+
+            $table->unique(['code', 'vehicle_type']);
         });
     }
 

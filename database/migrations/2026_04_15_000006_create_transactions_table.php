@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('transaction_code')->unique();
             $table->foreignId('tickets_id')->constrained('tickets')->onDelete('cascade')->onUpdate('cascade');
-            $table->timestamp('time_out')->nullable();
+            $table->timestamp('time_out')->useCurrent();
             $table->integer('duration_hour')->nullable(); 
             $table->integer('total_cost')->nullable();
             $table->string('status')->default('out');

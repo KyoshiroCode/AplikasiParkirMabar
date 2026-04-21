@@ -8,6 +8,9 @@ use Filament\Schemas\Schema;
 use Filament\Forms\Components\Select\Concerns\BelongsToSelect;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
+use Illuminate\Validation\Rule;
+use Filament\Notifications\Notification;
+use App\Models\Vehicles;
 
 
 class VehicleForm
@@ -17,7 +20,16 @@ class VehicleForm
         return $schema
             ->components([
                 TextInput::make('number_plate')
-                    ->required(),
+                    ->required()
+                    ->unique(
+                        table: 'vehicles',
+                        column: 'number_plate',
+                        ignoreRecord: true,
+                    )
+                    ->validationMessages([
+                        'unique' => 'Plate Number Has Taken!!',
+                    ]),
+
                 Select::make('vehicle_type')
                     ->label('Vehicle Type')
                     ->options([
@@ -33,10 +45,10 @@ class VehicleForm
                     })
                     ->dehydrateStateUsing(function ($state, Get $get) {
                         if ($state === 'other') {
-                            return $get('vehicle_type_custom');
+                            return strtolower($get('vehicle_type_custom'));
                         }
 
-                        return $state;
+                        return strtolower($state);
                     }),
 
                 TextInput::make('vehicle_type_custom')

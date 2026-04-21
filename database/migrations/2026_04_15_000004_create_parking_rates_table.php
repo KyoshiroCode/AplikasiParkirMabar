@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('parking_rates', function (Blueprint $table) {
             $table->id();
-            $table->enum('vehicle_type', ['Car', 'Motorcycle']);
+            $table->string('vehicle_type')->unique();
             $table->integer('rate_hour')->default(5000)->nullable();
             $table->timestamps();
         });

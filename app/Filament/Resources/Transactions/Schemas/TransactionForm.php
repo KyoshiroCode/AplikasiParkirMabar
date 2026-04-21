@@ -29,6 +29,8 @@ class TransactionForm
                     ->afterStateUpdated(fn ($state, Set $set) => $set('duration_hour', null)),
 
                 DateTimePicker::make('time_out')
+                    ->default(now())
+                    ->disabled()
                     ->required()
                     ->reactive()
                     ->afterStateUpdated(function (Get $get, Set $set) {

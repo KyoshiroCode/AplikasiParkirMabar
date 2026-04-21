@@ -48,6 +48,8 @@ class TicketsForm
 
                     ->label('Vehicle'),
                 DateTimePicker::make('entry_time')
+                    ->default(now())
+                    ->disabled()
                     ->required(),
                 TextInput::make('status')
                     ->required()
@@ -61,19 +63,19 @@ class TicketsForm
                     ->required()
                     ->label('Parking Area')
                     ->relationship('ParkingArea', 'name')
-                    // ->options(function (Get $get) {
+                    ->options(function (Get $get) {
 
-                    //     $vehicleId = $get('vehicle_id');
+                        $vehicleId = $get('vehicle_id');
 
-                    //     if (!$vehicleId) return [];
+                        if (!$vehicleId) return [];
 
-                    //     $vehicle = \App\Models\Vehicle::find($vehicleId);
+                        $vehicle = \App\Models\Vehicle::find($vehicleId);
 
-                    //     if (!$vehicle) return [];
+                        if (!$vehicle) return [];
 
-                    //     return \App\Models\ParkingArea::where('vehicle_type', $vehicle->vehicle_type)
-                    //         ->pluck('name', 'id');
-                    // })
+                        return \App\Models\ParkingArea::where('vehicle_type', $vehicle->vehicle_type)
+                            ->pluck('name', 'id');
+                    })
                     ->reactive()
                     ->afterStateUpdated(function ($state) {
 

@@ -40,7 +40,7 @@
 .fi-sidebar .fi-dropdown-panel {
     background-color: #1e243b;
 }
-.fi-dropdown-list-item:hover{
+.fi-sidebar .fi-dropdown-list-item:hover{
     background-color: #100c24;
 }
 
