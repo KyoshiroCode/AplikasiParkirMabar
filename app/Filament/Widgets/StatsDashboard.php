@@ -10,6 +10,7 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class StatsDashboard extends StatsOverviewWidget
 {
+    
     protected function getStats(): array
     {
         $countTicket = Tickets::count();

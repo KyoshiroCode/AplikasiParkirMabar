@@ -26,34 +26,7 @@ class FinancialReportResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema->components([
-
-            Select::make('type')
-                ->options([
-                    'daily' => 'Daily',
-                    'monthly' => 'Monthly',
-                ])
-                ->required()
-                ->live(),
-
-            DatePicker::make('date')
-                ->visible(fn (Get $get) => $get('type') === 'daily')
-                ->required(fn (Get $get) => $get('type') === 'daily'),
-
-            TextInput::make('month')
-                ->placeholder('2026-04')
-                ->visible(fn (Get $get) => $get('type') === 'monthly')
-                ->required(fn (Get $get) => $get('type') === 'monthly'),
-
-            TextInput::make('total_transactions')
-                ->disabled()
-                ->dehydrated(),
-
-            TextInput::make('total_income')
-                ->disabled()
-                ->prefix('Rp')
-                ->dehydrated(),
-        ]);
+        return FinancialReportForm::configure($schema);
     }
 
     public static function table(Table $table): Table
@@ -76,5 +49,20 @@ class FinancialReportResource extends Resource
             'edit' => EditFinancialReport::route('/{record}/edit'),
         ];
     }
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        return false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        return false;
+    }
+
 
 }

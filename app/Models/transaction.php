@@ -7,6 +7,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Services\FinancialReportService;
 
 
 class transaction extends Model
@@ -92,6 +93,17 @@ class transaction extends Model
         static::creating(function ($model) {
             $model->user_id = auth()->id();
         });
+
+        static::created(function ($transaction) {
+
+            $date = now()->toDateString();
+            $year = now()->year;
+            $month = now()->month;
+
+            FinancialReportService::generateDaily($date);
+            FinancialReportService::generateMonthly($year, $month);
+        });
+
     }
 
 }

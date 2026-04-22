@@ -22,6 +22,9 @@ use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use App\Filament\Widgets\StatsDashboard;
 use App\Filament\Widgets\WelcomeWidget;
+use App\Filament\Widgets\TopParkingArea;
+use App\Filament\Widgets\DailyIncome;
+use App\Filament\Widgets\MonthlyIncome;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -44,10 +47,14 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                AccountWidget::class,
+                // AccountWidget::class,
+                // TopParkingArea::class,
+                DailyIncome::class,
+                // MonthlyIncome::class,
                 // FilamentInfoWidget::class,
-                StatsDashboard::class,
+                
                 WelcomeWidget::class,
+                StatsDashboard::class,
             ])
             ->middleware([
                 EncryptCookies::class,

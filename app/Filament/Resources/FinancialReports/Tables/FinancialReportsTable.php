@@ -8,6 +8,8 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Actions\Action;
+use Filament\Tables\Filters\SelectFilter;
+
 
 class FinancialReportsTable
 {
@@ -35,6 +37,13 @@ class FinancialReportsTable
                 ->label('Print')
                 ->url(fn ($record) => url('/report/print/' . $record->id))
                 ->openUrlInNewTab(),
+        ])
+        ->filters([
+            SelectFilter::make('type')
+                ->options([
+                    'daily' => 'Daily',
+                    'monthly' => 'Monthly',
+                ]),
         ]);
 
     }
