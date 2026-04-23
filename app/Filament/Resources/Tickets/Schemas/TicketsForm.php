@@ -24,7 +24,10 @@ class TicketsForm
             ->components([
                 Select::make('vehicle_id')
                     ->required()
-                    ->relationship('vehicle','number_plate')
+                    ->relationship('vehicle', 'number_plate')
+                    ->getOptionLabelFromRecordUsing(function ($record) {
+                        return $record->number_plate . ' - ' . ucfirst($record->vehicle_type);
+                    })
                     ->reactive()
                     ->preload()
                     ->searchable()
@@ -32,7 +35,6 @@ class TicketsForm
 
                         if (!$state) return;
 
-                        // 🔥 cek apakah masih ada tiket aktif
                         $exists = Tickets::where('vehicle_id', $state)
                             ->where('status', 'in')
                             ->exists();
@@ -44,13 +46,10 @@ class TicketsForm
                                 ->danger()
                                 ->send();
 
-                            // reset pilihan biar ga bisa lanjut
                             $set('vehicle_id', null);
-
                             return;
                         }
 
-                        // lanjut logic lu
                         $vehicle = \App\Models\Vehicle::find($state);
 
                         $set('owner', $vehicle?->owner);
@@ -61,8 +60,8 @@ class TicketsForm
 
                         $set('parking_area_id', null);
                     })
-
                     ->label('Vehicle'),
+
                 DateTimePicker::make('entry_time')
                     ->default(now())
                     ->disabled()
@@ -78,34 +77,26 @@ class TicketsForm
                 Select::make('parking_area_id')
                     ->required()
                     ->label('Parking Area')
-                    ->relationship('ParkingArea', 'name')
-                    ->options(function (Get $get) {
-
-                        $vehicleId = $get('vehicle_id');
-
-                        if (!$vehicleId) return [];
-
-                        $vehicle = \App\Models\Vehicle::find($vehicleId);
-
-                        if (!$vehicle) return [];
-
-                        return \App\Models\ParkingArea::where('vehicle_type', $vehicle->vehicle_type)
-                            ->pluck('name', 'id');
+                    ->options(function () {
+                        return \App\Models\ParkingArea::pluck('name', 'id');
                     })
+                    ->searchable()
+                    ->preload()
                     ->reactive()
                     ->afterStateUpdated(function ($state) {
 
                         $area = \App\Models\ParkingArea::find($state);
 
-                        if ($area && $area->capacity === 0) {
+                        if ($area && $area->used_slots >= $area->capacity) {
 
-                            Notification::make()
+                            \Filament\Notifications\Notification::make()
                                 ->title('Parkir penuh!')
                                 ->body('Area ini sudah tidak tersedia slot.')
                                 ->danger()
                                 ->send();
                         }
                     })
+
 
 
             ]);

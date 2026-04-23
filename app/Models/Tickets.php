@@ -58,8 +58,7 @@ class Tickets extends Model
 
             $area = $transaction->parkingArea;
 
-            if ($area && $area->capacity > 0) {
-                $area->decrement('capacity'); // -1
+            if ($area) {
                 $area->increment('used_slots'); // +1
             }
         });

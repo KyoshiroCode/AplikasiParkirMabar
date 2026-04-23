@@ -7,41 +7,31 @@ use App\Models\FinancialReport;
 class FinancialReportService
 {
     public static function generateDaily($date)
-    {
-        $transactions = Transaction::whereDate('time_out', $date);
+{
+    $transactions = \App\Models\Transaction::whereDate('time_out', $date);
 
-        $totalIncome = $transactions->sum('total_cost');
-        $totalTransactions = $transactions->count();
-
-        FinancialReport::updateOrCreate(
-            [
-                'type' => 'daily',
-                'date' => $date,
-            ],
-            [
-                'total_income' => $totalIncome,
-                'total_transactions' => $totalTransactions,
-            ]
-        );
+        \App\Models\FinancialReport::create([
+            'type' => 'daily',
+            'date' => $date,
+            'month' => null,
+            'total_transactions' => $transactions->count(),
+            'total_income' => $transactions->sum('total_cost'),
+        ]);
     }
+
 
     public static function generateMonthly($year, $month)
     {
-        $transactions = Transaction::whereYear('time_out', $year)
+        $transactions = \App\Models\Transaction::whereYear('time_out', $year)
             ->whereMonth('time_out', $month);
 
-        $totalIncome = $transactions->sum('total_cost');
-        $totalTransactions = $transactions->count();
-
-        FinancialReport::updateOrCreate(
-            [
-                'type' => 'monthly',
-                'month' => "$year-$month",
-            ],
-            [
-                'total_income' => $totalIncome,
-                'total_transactions' => $totalTransactions,
-            ]
-        );
+        \App\Models\FinancialReport::create([
+            'type' => 'monthly',
+            'date' => null,
+            'month' => "$year-$month",
+            'total_transactions' => $transactions->count(),
+            'total_income' => $transactions->sum('total_cost'),
+        ]);
     }
+
 }

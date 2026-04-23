@@ -37,14 +37,8 @@ class FinancialReportsTable
                 ->label('Print')
                 ->url(fn ($record) => url('/report/print/' . $record->id))
                 ->openUrlInNewTab(),
-        ])
-        ->filters([
-            SelectFilter::make('type')
-                ->options([
-                    'daily' => 'Daily',
-                    'monthly' => 'Monthly',
-                ]),
         ]);
+
 
     }
 }

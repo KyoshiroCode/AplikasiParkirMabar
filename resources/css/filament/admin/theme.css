@@ -12,6 +12,12 @@
     top: 0;
     height: 100vh;
     overflow-y: auto;
+    -ms-overflow-style: none;  /* IE dan Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.fi-sidebar::-webkit-scrollbar{
+    display: none;
 }
 
 /* SIDEBAR TEXT */

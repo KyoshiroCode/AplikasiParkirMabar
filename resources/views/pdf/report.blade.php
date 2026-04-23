@@ -6,14 +6,14 @@
 	<title>Report</title>
 </head>
 <body>
-	<h2>LAPORAN KEUANGAN</h2>
+	<h1>LAPORAN KEUANGAN</h1>
 
 	<p>Type: {{ $report->type }}</p>
 
 	@if($report->type === 'daily')
 		<p>Tanggal: {{ $report->date }}</p>
 	@else
-	<	p>Bulan: {{ $report->month }}</p>
+			<p>Bulan: {{ $report->month }}</p>
 	@endif
 
 	<hr>
