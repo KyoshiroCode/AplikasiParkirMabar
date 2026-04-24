@@ -9,7 +9,15 @@ class Notification extends Model
     protected $fillable = [
         'title',
         'message',
-        'is_read',
+        'created_by',
+        'type',
+        'target_role'
     ];
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class)
+            ->withPivot('is_read', 'read_at')
+            ->withTimestamps();
+    }
 }

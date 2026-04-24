@@ -61,7 +61,6 @@ class transaction extends Model
     }
     protected static function booted()
     {
-        // 🔥 setelah transaksi dibuat
         static::created(function ($transaction) {
 
             $ticket = $transaction->ticket;

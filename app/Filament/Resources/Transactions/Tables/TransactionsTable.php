@@ -19,6 +19,7 @@ use App\Models\ParkingArea;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
+
 class TransactionsTable
 {
     use SoftDeletes;

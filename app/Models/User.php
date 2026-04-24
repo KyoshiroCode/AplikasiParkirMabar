@@ -56,4 +56,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function notifications()
+    {
+        return $this->belongsToMany(Notification::class)
+            ->withPivot('is_read', 'read_at')
+            ->withTimestamps();
+    }
+
 }

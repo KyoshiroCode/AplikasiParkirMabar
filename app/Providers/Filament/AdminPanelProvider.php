@@ -25,6 +25,8 @@ use App\Filament\Widgets\WelcomeWidget;
 use App\Filament\Widgets\TopParkingArea;
 use App\Filament\Widgets\DailyIncome;
 use App\Filament\Widgets\MonthlyIncome;
+use App\Filament\Widgets\NotificationWidget;
+
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -52,7 +54,7 @@ class AdminPanelProvider extends PanelProvider
                 DailyIncome::class,
                 // MonthlyIncome::class,
                 // FilamentInfoWidget::class,
-                
+                NotificationWidget::class,
                 WelcomeWidget::class,
                 StatsDashboard::class,
             ])

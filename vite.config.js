@@ -9,16 +9,5 @@ export default defineConfig({
             refresh: true,
         }),
         tailwindcss(),
-        plugin(function({ addUtilities }) {
-          addUtilities({
-            '.no-scrollbar::-webkit-scrollbar': {
-              'display': 'none',
-            },
-            '.no-scrollbar': {
-              '-ms-overflow-style': 'none',  /* IE and Edge */
-              'scrollbar-width': 'none',  /* Firefox */
-            },
-          })
-        })
     ],
 });
