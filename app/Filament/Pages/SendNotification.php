@@ -34,7 +34,6 @@ class SendNotification extends Page implements Forms\Contracts\HasForms
                 Forms\Components\Select::make('type')
                     ->options([
                         'broadcast' => 'All User',
-                        'role' => 'By Role',
                         'personal' => 'User Tertentu',
                     ])
                     ->required()
@@ -56,6 +55,7 @@ class SendNotification extends Page implements Forms\Contracts\HasForms
 
                 Forms\Components\Select::make('user_ids')
                     ->multiple()
+                    ->label('Name')
                     ->options(User::pluck('name', 'id')->toArray())
                     ->searchable()
                     ->preload()

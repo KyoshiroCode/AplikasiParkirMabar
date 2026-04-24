@@ -83,7 +83,7 @@ class TicketsForm
                     ->searchable()
                     ->preload()
                     ->reactive()
-                    ->afterStateUpdated(function ($state) {
+                    ->afterStateUpdated(function ($state, Set $set) {
 
                         $area = \App\Models\ParkingArea::find($state);
 
@@ -94,6 +94,9 @@ class TicketsForm
                                 ->body('Area ini sudah tidak tersedia slot.')
                                 ->danger()
                                 ->send();
+
+                            $set('parking_area_id', null);
+                            return;
                         }
                     })
 

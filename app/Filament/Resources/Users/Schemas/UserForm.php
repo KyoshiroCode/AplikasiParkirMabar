@@ -19,7 +19,7 @@ class UserForm
                     ->label('Email address')
                     ->email()
                     ->required(),
-                Select::make('role')
+                Select::make('roles')
                     ->relationship('roles', 'name')
                     ->required(),
                 TextInput::make('password')

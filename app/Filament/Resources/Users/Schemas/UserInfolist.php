@@ -14,7 +14,7 @@ class UserInfolist
                 TextEntry::make('name'),
                 TextEntry::make('email')
                     ->label('Email address'),
-                TextEntry::make('role')
+                TextEntry::make('roles.name')
                     ->badge(),
                 TextEntry::make('email_verified_at')
                     ->dateTime()

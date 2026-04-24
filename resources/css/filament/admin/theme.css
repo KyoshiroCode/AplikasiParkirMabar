@@ -8,16 +8,9 @@
 /* SIDEBAR BACKGROUND */
 .fi-sidebar {
     background: linear-gradient(180deg, #0f172a, #020617);
-    position: sticky;
+    /*position: sticky;*/
     top: 0;
     height: 100vh;
-    overflow-y: auto;
-    -ms-overflow-style: none;  /* IE dan Edge */
-    scrollbar-width: none;  /* Firefox */
-}
-
-.fi-sidebar::-webkit-scrollbar{
-    display: none;
 }
 
 /* SIDEBAR TEXT */

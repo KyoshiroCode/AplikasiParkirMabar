@@ -74,7 +74,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugin(FilamentShieldPlugin::make())
             ->topBar(false)
-            ->darkMode(false)
-            ->sidebarFullyCollapsibleOnDesktop();
+            ->darkMode(false);
     }
 }
